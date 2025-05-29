@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerbID - Remedy for {{ symptom }}</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='symptom_detail.css') }}">
+</head>
+<body class="w3-light-grey">
+<div class="w3-container w3-padding-64 w3-left">
+    <h2>Remedy for {{ symptom }}</h2>
+
+    {% if remedy %}
+        <div class="w3-card-4 w3-padding">
+            <p><strong>Plant:</strong> {{ remedy.plant }}</p>
+            <p><strong>Required Quantity:</strong> {{ remedy.quantity }}</p>
+            <p><strong>Preparation:</strong> {{ remedy.preparation }}</p>
+            <p><strong>Description:</strong> {{ remedy.Description }}</p>
+
+        </div>
+    {% else %}
+        <p>Sorry, no remedy available for this symptom.</p>
+    {% endif %}
+
+    <a href="{{ url_for('symptoms') }}" class="w3-button w3-margin-top w3-green">Back to Symptoms</a>
+</div>
+</body>
+</html>

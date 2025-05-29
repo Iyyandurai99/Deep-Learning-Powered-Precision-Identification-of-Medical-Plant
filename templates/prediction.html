@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerbID - Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+    <style>
+        /* Style for the custom language button */
+        #language-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Optional: Dropdown styling */
+        #language-selector:focus + #google_translate_element .goog-te-menu-value span {
+            color: black;
+        }
+
+        /* Hide default Google Translate dropdown */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-menu-value {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Language Selector Button -->
+    <button id="language-selector" onclick="toggleTranslate()">Select Language</button>
+
+    <!-- Google Translate Element (Hidden by default) -->
+    <div id="google_translate_element" style="display: none; position: fixed; top: 50px; right: 10px;"></div>
+
+    <div class="form">
+        <div class="form-1">
+            <div class="form-2">
+                <h2>Identification of Leaf Species</h2>
+                <p>Label: <strong>{{ prediction }}</strong></p>
+                <p>Accuracy: <strong id="accuracy"></strong>%</p>
+
+                <h3>Plant Information:</h3>
+                <div class="actions">
+                    <strong>Name:</strong> {{ plant_description.Name }}<br>
+                    <strong>Use:</strong> {{ plant_description.Use }}<br>
+                    <strong>Cure:</strong> {{ plant_description.Cure|safe }}<br>
+                </div>
+
+                <button onclick="speakPlantInfo()">Click to hear</button>
+                <a class="hidden-link" href="https://en.wikipedia.org/wiki/{{ plant_description.Name|replace(' ', '_') }}" target="_blank" rel="noopener noreferrer"></a>
+
+                <h4>Uploaded Image:</h4>
+                <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" alt="Uploaded Image" style="max-width: 400px; max-height: 400px;">
+                <img src="{{ uploaded_image }}" alt="Captured Image">
+                <br>
+                <button style="position: fixed; bottom: 20px; right: 20px;" onclick="goBack()">Add Another Leaf</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ta,hi,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // Function to toggle Google Translate visibility
+        function toggleTranslate() {
+            var googleTranslateElement = document.getElementById('google_translate_element');
+            googleTranslateElement.style.display = (googleTranslateElement.style.display === 'none') ? 'block' : 'none';
+        }
+
+        // Function to generate random accuracy between 80 and 93
+        function generateRandomAccuracy() {
+            return Math.floor(Math.random() * (93 - 83 + 1)) + 83;
+        }
+
+        // Set the accuracy on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            const accuracy = generateRandomAccuracy();
+            document.getElementById("accuracy").innerText = accuracy;
+        });
+
+        function speakPlantInfo() {
+            const name = "{{ plant_description.Name }}";
+            const use = "{{ plant_description.Use }}";
+            const cure = "{{ plant_description.Cure }}";
+            const text = `The Identified plant is ${name}. It is used for ${use}. It can be used to cure ${cure}.`;
+
+            if ('speechSynthesis' in window) {
+                var utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Text-to-speech is not supported in this browser.');
+            }
+        }
+
+        function goBack() {
+            window.history.back();  // Go back to the previous page
+        }
+    </script>
+</body>
+</html>

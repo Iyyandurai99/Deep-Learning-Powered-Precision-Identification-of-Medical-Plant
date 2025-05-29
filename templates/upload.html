@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <title>HerbID - Get Started</title>
+
+</head>
+
+<body>
+    <div class="box-form">
+        <div class="left">
+            <div class="overlay_1">
+                <br><br><br>
+                <h1 style = strong >Plant Species Identification</h1><br><br><br>
+
+                <!-- Form for Image Upload (still available) -->
+                <form action="/plant_species" method="POST" enctype="multipart/form-data">
+                    <input
+                        style="width:200px; border:1px solid rgba(0, 0, 0, 0.422); background-color: rgb(10, 125, 8); border-radius:15px; text-align:center"
+                        type="file" name="image" required>
+                    <br><br><br>
+                    <input type="submit" id="submit" style="color: #fff;
+                            font-size: 16px;
+                            padding: 12px 35px;
+                            border-radius: 50px;
+                            display: inline-block;
+                            border: 0;
+                            outline: 0;
+                            box-shadow: 0px 4px 20px 0px #49c628a6;
+                            background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);" value="Identify">
+                </form>
+
+                <!-- Video Stream for Webcam Capture -->
+                <h2>Webcam Stream for Real-Time Identification</h2>
+                <div>
+                    <img src="{{ url_for('video_feed') }}" width="640" height="480" id="video_feed" />
+                </div>
+                <br>
+                <button onclick="captureImage()">Capture Image and Predict Plant</button>
+
+                <!-- Area to display prediction result -->
+                <div id="prediction_result">
+                    <!-- The prediction result will be populated here dynamically -->
+                </div>
+
+                <script>
+                    function captureImage() {
+                        // Trigger image capture by calling the capture_image route
+                        fetch('/capture_image')
+                            .then(response => response.text())
+                            .then(data => {
+                                // Update the prediction_result section with the returned data
+                                document.getElementById('prediction_result').innerHTML = data;
+                            })
+                            .catch(error => {
+                                console.error('Error capturing image:', error);
+                            });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

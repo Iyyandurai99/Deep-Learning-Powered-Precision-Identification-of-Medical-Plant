@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerbID - Prediction</title>
+    <style>
+        /* Overall page styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container for the main content */
+        .form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Form inner content styling */
+        .form-1 {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2, h3, h4 {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Custom language button */
+        #language-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        #language-selector:hover {
+            background-color: #45a049;
+        }
+
+        /* Google Translate element positioning */
+        #google_translate_element {
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        /* Plant information styling */
+        .actions {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .actions strong {
+            color: #388e3c;
+        }
+
+        /* Button styling */
+        button, .w3-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, .w3-button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden-link {
+            display: none;
+        }
+
+        /* Image styling */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Go to home button */
+        button.fixed-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button.fixed-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Hide Google Translate banner and default styles */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget-icon {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <div class="form-1">
+            <div class="form-2">
+                <h2>Identification of Leaf Species</h2>
+                <p>Label: <strong> {{ prediction }}</</strong></p>
+                <h3>Plant Information:</h3>
+                <div class="actions">
+                <strong>Use:</strong> {{ plant_description.Use }}<br>
+                    <strong>Cure:</strong> {{ plant_description.Cure|safe }}<br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function speakPlantInfo() {
+            const name = "{{ plant_description.Name }}";
+            const use = "{{ plant_description.Use }}";
+            const cure = "{{ plant_description.Cure }}";
+            const text = `The Identified plant is ${name}. It is used for ${use}. It can be used to cure ${cure}.`;
+        }
+    </script>
+</body>
+</html>

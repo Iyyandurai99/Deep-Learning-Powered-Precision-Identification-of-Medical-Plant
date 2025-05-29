@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerbID - Symptoms</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='symptoms.css') }}">
+</head>
+<body class="w3-light-grey">
+<div class="w3-container w3-padding-64 w3-center">
+    <h2>Symptoms</h2>
+    <p>Select a symptom to see natural remedies:</p>
+
+    <ul class="w3-ul w3-card-4">
+        <li><a href="{{ url_for('symptom_detail', symptom='Cold') }}" class="w3-button w3-block w3-white">Cold</a></li>
+        <li><a href="{{ url_for('symptom_detail', symptom='Cough') }}" class="w3-button w3-block w3-white">Cough</a></li>
+        <li><a href="{{ url_for('symptom_detail', symptom='Fever') }}" class="w3-button w3-block w3-white">Fever</a></li>
+        <li><a href="{{ url_for('symptom_detail', symptom='Headache') }}" class="w3-button w3-block w3-white">Headache</a></li>
+        <li><a href="{{ url_for('symptom_detail', symptom='Skin Irritation') }}" class="w3-button w3-block w3-white">Skin Irritation</a></li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="w3-button w3-margin-top w3-green">Back to Home Page</a>
+</div>
+</body>
+</html>
